@@ -24,7 +24,7 @@ void countNum(int threadNum) {
 int main() {
     vector<thread> threads;
     for (int i = 0; i < threadCount; i++) {
-        threads.push_back(thread(countNum, i));
+        threads.push_back(thread(countNum, i + 1));
     }
     for (auto &thr : threads) {
         thr.join();
