@@ -1,0 +1,1 @@
+dont have to remember to join the thread or worry about destroying thread explicitly. only need to create a block, which syntactically differentiates the threaded section, making it cleaner and clearer
