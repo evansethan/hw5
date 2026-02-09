@@ -4,7 +4,6 @@
 #include <vector>
 #include <iostream>
 #include <initializer_list>
-#include <mutex>
 #include <shared_mutex>
 #include <thread>
 
@@ -28,11 +27,11 @@ void print() {
     cout << "top>" << "\nnext pop: " << s.back() << endl;
 }
 void push(T t) {
-    scoped_lock lock(mtx);
+    unique_lock lock(mtx);
     s.push_back(t);
 }
 T pop() {
-    scoped_lock lock(mtx);
+    unique_lock lock(mtx);
     if (s.empty()) {
         throw runtime_error("List is empty");
     }

@@ -9,32 +9,30 @@
 using namespace mpcs;
 using namespace std;
 
-const int reps = 15;
+const int reps = 12;
 const int threadCount = 5;
 const int modulo = 3;
 const int k = 5;
 Stack<double> s;
-mutex mtx;
 int c = 0;
+//mutex mtx;
 
 void buildStack(int mod) {
-    scoped_lock lock(mtx);
     for (int i = 0; i < reps; i++) {
+        //lock_guard<mutex> lock(mtx);
         c++;
-        s.push(c);
         if (c % mod == 0) {
-            s.pop();
+            continue;
+            //s.pop(); // commented out to avoid second-order race condition
         }
+        s.push(c);
     }
 }
 
 void removeTopK(int threadNum, int k) {
-    scoped_lock lock(mtx);
-    cout << "Thread " << threadNum << " removed: (";
     for (int i = 0; i < k; i++) {
-        cout << s.pop() << ", ";
+        s.pop();
     }
-    cout << ")" << endl;
 }
 
 int main() {
@@ -44,6 +42,8 @@ int main() {
             threads.push_back(jthread(buildStack, modulo));
         }
     }
+    cout << "Initial stack (counting to " << reps * threadCount << ", every multiple of " << modulo << " removed):\n";
+    s.print();
     {
         vector<jthread> threads;
         for (int i = 1; i <= threadCount; i++) {
@@ -51,7 +51,7 @@ int main() {
         }
     }
     cout << endl;
-    cout << "Final stack:\n";
+    cout << "Final stack (top " << k * threadCount << " removed):\n";
     s.print();
     return 0;
 }
