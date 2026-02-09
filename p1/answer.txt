@@ -1,1 +1,1 @@
-Threads seem to be scheduled somewhat at random. They vary from run to run of the same compiled program.
+Threads are scheduled by the operating system somewhat unpredictably. They vary from run to run of the same compiled program.
