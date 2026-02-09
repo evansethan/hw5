@@ -7,8 +7,8 @@
 #include<numeric>
 
 using namespace std;
-size_t const reps{10};
-size_t const threadCount{3};
+const int reps = 100;
+const int threadCount = 3;
 int c = 0;
 mutex mtx;
 

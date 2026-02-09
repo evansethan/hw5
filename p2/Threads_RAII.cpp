@@ -7,7 +7,7 @@
 #include<numeric>
 
 using namespace std;
-const int reps = 10;
+const int reps = 100;
 const int threadCount = 3;
 int c = 0;
 mutex mtx;
