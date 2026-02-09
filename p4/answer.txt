@@ -1,1 +1,4 @@
-todo
+I prefer "const int" because a simple definition like "const int x = 1; reads clearly left-to-right as "constant integer x equals 1". Squishing the qualifier in between the type and the variable name breaks the definition pattern of "type id;" which is deeply engrained at this point.
+
+While "int const" can help deal with with complex type definitions like pointers, I stick with "const int" for readability and consistency. 
+
