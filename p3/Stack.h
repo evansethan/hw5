@@ -4,31 +4,37 @@
 #include <vector>
 #include <iostream>
 #include <initializer_list>
+#include <mutex>
+#include <shared_mutex>
+#include <thread>
 
+using namespace std;
 namespace mpcs {
 
 template <typename T>
 class Stack{
 private:
-    std::vector<T> s;
+    vector<T> s;
+    shared_mutex mtx;
 public:
-Stack(std::initializer_list<T> list = {}) : s(list) {
-    std::cout << "new ";
-    print();
+Stack(initializer_list<T> list = {}) : s(list) {
 }
 void print() {
-    std::cout << "stack: ";
+    shared_lock lock(mtx);
+    cout << "<bottom ";
     for (T& elem : s) {
-        std::cout << elem << " ";
+        cout << elem << " ";
     }
-    std::cout << std::endl;
+    cout << "top>" << "\nnext pop: " << s.back() << endl;
 }
 void push(T t) {
+    scoped_lock lock(mtx);
     s.push_back(t);
 }
 T pop() {
+    scoped_lock lock(mtx);
     if (s.empty()) {
-        throw std::runtime_error("List is empty");
+        throw runtime_error("List is empty");
     }
     T t = s.back();
     s.pop_back();
