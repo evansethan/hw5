@@ -1,8 +1,9 @@
 #ifndef STACK_H
-#  define STACK_H
+#define STACK_H
 
-#include<vector>
-#include<iostream>
+#include <vector>
+#include <iostream>
+#include <initializer_list>
 
 namespace mpcs {
 
@@ -10,12 +11,13 @@ template <typename T>
 class Stack{
 private:
     std::vector<T> s;
-    int i;
 public:
-Stack() {
-    i = 3;
+Stack(std::initializer_list<T> list = {}) : s(list) {
+    std::cout << "new ";
+    print();
 }
 void print() {
+    std::cout << "stack: ";
     for (T& elem : s) {
         std::cout << elem << " ";
     }
